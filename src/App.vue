@@ -1,6 +1,19 @@
 <template>
   <div class="app-container">
     <div class="wrapper" :class="{ active: isActive }">
+      
+      <button
+        type="button"
+        class="theme-toggle-btn"
+        @click="toggleTheme"
+        :aria-label="getLabel()"
+        :title="getLabel()"
+      >
+        <span class="material-icons theme-icon">
+          {{ getIcon() }}
+        </span>
+      </button>
+
       <header>
         <h1>QR Code Générateur</h1>
         <p>Entre un url ou du texte pour créer un code QR</p>
@@ -33,6 +46,21 @@
 
 <script setup>
 import { ref, computed } from 'vue';
+import { useTheme } from "./composables/useTheme.js";
+
+const { theme, toggleTheme, isDark } = useTheme();
+
+const getIcon = () => {
+  if (theme.value === "light") return "light_mode";
+  if (theme.value === "dark") return "dark_mode";
+  return "contrast"; // pour le mode system
+};
+
+const getLabel = () => {
+  if (theme.value === "light") return "Switch to dark mode";
+  if (theme.value === "dark") return "Switch to system mode";
+  return "Switch to light mode";
+};
 
 const qrValue = ref('');
 const qrImage = ref('');

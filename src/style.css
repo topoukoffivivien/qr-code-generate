@@ -1,121 +1,183 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+/* ----- VARIABLES MATERIAL YOU ----- */
+:root {
+  --radius: 18px;
 
+  /* Material You – LIGHT */
+  --bg: #f7f7f7;
+  --fg: #1a1a1a;
+  --card: rgba(255, 255, 255, 0.8);
+  --input-bg: #ffffff;
+  --input-border: #d4d4d4;
+  --accent: #a17965;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode (manuelle) */
+[data-theme="dark"] {
+  --bg: #0f0f0f;
+  --fg: #ffffff;
+  --card: rgba(30, 30, 30, 0.75);
+  --input-bg: #1e1e1e;
+  --input-border: #444;
+  --accent: #c9a48f;
+  --shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* AUTO : si système est sombre */
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="system"] {
+    --bg: #0f0f0f;
+    --fg: #ffffff;
+    --card: rgba(30, 30, 30, 0.75);
+    --input-bg: #1e1e1e;
+    --input-border: #444;
+    --accent: #c9a48f;
+    --shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* ---- GLOBAL ---- */
 * {
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
 
-
-.app-container {
-  display: flex;
-  padding: 0 10px;
-  min-height: 100vh;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(180deg, #ffffff 45%, #a17965 100%);
-  color: #fff;
-  transition: background 0.6s ease-in-out;
+body, .app-container {
+  background: var(--bg);
+  color: var(--fg);
+  transition: background 0.45s ease, color 0.35s ease;
 }
 
+/* ---- APP ---- */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
 
+/* CARD (Material + iOS) */
 .wrapper {
-  height: 100%;
   width: 100%;
   max-width: 420px;
-  background: #1f1f1f;
-  border-radius: 14px;
-  padding: 24px 28px 0;
-  transition: height 0.4s ease, transform 0.4s ease;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(6px);
+  background: var(--card);
+  backdrop-filter: blur(18px) saturate(180%);
+  padding: 26px 30px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: height 0.45s ease, transform 0.3s ease, background 0.4s ease;
+  height: 280px;
 }
 
 .wrapper.active {
-  height: 540px;
+  height: 550px;
   transform: translateY(-4px);
 }
 
-
+/* ---- HEADER ---- */
 header h1 {
-  font-size: 22px;
+  font-size: 23px;
   font-weight: 600;
-  color: #fff;
   text-align: center;
-  letter-spacing: 0.5px;
-  transition: 0.3s ease;
+  margin-bottom: 4px;
 }
 
 header p {
-  margin-top: 6px;
-  color: #bdbdbd;
-  font-size: 15px;
   text-align: center;
+  color: var(--fg);
+  opacity: 0.65;
 }
 
+/* ---- THEME TOGGLE BUTTON ---- */
+.theme-toggle-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--fg);
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+}
 
-.wrapper .form {
-  margin: 22px 0 28px;
+.theme-toggle-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.theme-icon {
+  font-size: 28px;
+}   
+
+/* ---- FORM ---- */
+.form {
+  margin: 24px 0 30px;
 }
 
 .form input,
 .form button {
   width: 100%;
-  height: 56px;
-  border: none;
+  height: 58px;
+  border-radius: 16px;
+  border: 1px solid var(--input-border);
   outline: none;
-  border-radius: 10px;
   transition: all 0.25s ease;
 }
 
-
+/* INPUT */
 .form input {
+  background: var(--input-bg);
+  padding: 0 18px;
   font-size: 17px;
-  padding: 0 17px;
-  border: 1px solid #555;
-  background: #2b2b2b;
-  color: #fff;
+  color: var(--fg);
+  backdrop-filter: blur(10px);
 }
 
 .form input:focus {
-  border-color: #a17965;
-  box-shadow: 0 0 8px rgba(161, 121, 101, 0.4);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(161, 121, 101, 0.25);
 }
 
-.form input::placeholder {
-  color: #8d8d8d;
-}
-
-
+/* BUTTON */
 .form button {
-  color: #fff;
-  cursor: pointer;
   margin-top: 20px;
   font-size: 17px;
-  background: linear-gradient(135deg, #5b463c, #a17965);
-  box-shadow: 0 4px 10px rgba(161, 121, 101, 0.35);
+  background: var(--accent);
+  color: #fff;
+  font-weight: 500;
+  box-shadow: 0 6px 20px rgba(161, 121, 101, 0.35);
 }
 
 .form button:hover {
-  filter: brightness(1.1);
+  filter: brightness(1.08);
 }
 
 .form button:active {
   transform: scale(0.96);
 }
 
-
+/* ---- QR CODE AREA ---- */
 .qr-code {
   opacity: 0;
-  display: flex;
-  padding: 25px 0;
-  border-radius: 12px;
-  align-items: center;
+  padding: 25px 25px;
+  border-radius: var(--radius);
   pointer-events: none;
-  justify-content: center;
-  border: 1px solid #444;
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(4px);
-  transition: opacity 0.5s ease, background 0.5s ease;
+  transition: opacity 0.45s ease, background 0.5s ease;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(200, 200, 200, 0.25);
+  backdrop-filter: blur(10px);
+}
+
+[data-theme="dark"] .qr-code,
+[data-theme="system"] .qr-code {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .wrapper.active .qr-code {
@@ -124,31 +186,21 @@ header p {
 }
 
 .qr-code img {
-  width: 180px;
-  transition: transform 0.4s ease;
+  width: 190px;
+  transition: transform 0.35s ease;
 }
 
 .qr-code img:hover {
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
-
+/* ---- RESPONSIVE ---- */
 @media (max-width: 430px) {
   .wrapper {
-    height: 255px;
-    padding: 18px 22px;
+    height: 270px;
+    padding: 20px;
   }
   .wrapper.active {
     height: 520px;
   }
-  header p {
-    color: #787878;
-  }
-  .qr-code img {
-    width: 160px;
-  }
 }
-.form input {
-  font-size: 16px;
-}
-  
