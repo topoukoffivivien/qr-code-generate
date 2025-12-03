@@ -66,7 +66,7 @@
    IMPORTS
 -------------------------------------------------- */
 import { ref, computed } from 'vue';
-import { useTheme } from "./composables/useTheme.js";
+import { useTheme } from "./utils/useTheme.js";
 
 
 /* --------------------------------------------------
