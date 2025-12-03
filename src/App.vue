@@ -1,7 +1,8 @@
 <template>
   <div class="app-container">
     <div class="wrapper" :class="{ active: isActive }">
-      
+
+      <!-- Theme toggle -->
       <button
         type="button"
         class="theme-toggle-btn"
@@ -14,11 +15,13 @@
         </span>
       </button>
 
+      <!-- Header -->
       <header>
         <h1>QR Code Générateur</h1>
         <p>Entre un url ou du texte pour créer un code QR</p>
       </header>
-      
+
+      <!-- Form -->
       <div class="form">
         <input
           type="text"
@@ -27,33 +30,54 @@
           spellcheck="false"
           placeholder="Entrer texte ou url"
         />
+
         <button @click="generateQR">
           {{ buttonText }}
         </button>
       </div>
-      
+
+      <!-- QR Code area -->
       <div class="qr-code">
-        <img 
-          v-if="qrImage" 
-          :src="qrImage" 
+        <img
+          v-if="qrImage"
+          :src="qrImage"
           alt="qr-code"
           @load="handleImageLoad"
         />
+
+        <button
+          v-if="qrImage"
+          class="download-btn"
+          @click="downloadQR"
+        >
+          <span class="material-symbols-outlined">
+            download
+          </span>
+        </button>
       </div>
+
     </div>
   </div>
 </template>
 
+
 <script setup>
+/* --------------------------------------------------
+   IMPORTS
+-------------------------------------------------- */
 import { ref, computed } from 'vue';
 import { useTheme } from "./composables/useTheme.js";
 
-const { theme, toggleTheme, isDark } = useTheme();
+
+/* --------------------------------------------------
+   THEME HANDLING
+-------------------------------------------------- */
+const { theme, toggleTheme } = useTheme();
 
 const getIcon = () => {
   if (theme.value === "light") return "light_mode";
   if (theme.value === "dark") return "dark_mode";
-  return "contrast"; // pour le mode system
+  return "contrast";
 };
 
 const getLabel = () => {
@@ -62,27 +86,34 @@ const getLabel = () => {
   return "Switch to light mode";
 };
 
+
+/* --------------------------------------------------
+   QR STATES
+-------------------------------------------------- */
 const qrValue = ref('');
 const qrImage = ref('');
 const isActive = ref(false);
 const isGenerating = ref(false);
 const preValue = ref('');
 
-const buttonText = computed(() => {
-  return isGenerating.value ? 'Generating QR Code...' : 'Generate QR Code';
-});
+const buttonText = computed(() =>
+  isGenerating.value ? "Generating QR Code..." : "Generate QR Code"
+);
 
+
+/* --------------------------------------------------
+   QR GENERATION LOGIC
+-------------------------------------------------- */
 const generateQR = () => {
   const trimmedValue = qrValue.value.trim();
-  
-  if (!trimmedValue || preValue.value === trimmedValue) {
-    return;
-  }
-  
+
+  if (!trimmedValue || preValue.value === trimmedValue) return;
+
   preValue.value = trimmedValue;
   isGenerating.value = true;
-  
-  qrImage.value = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(trimmedValue)}`;
+
+  qrImage.value =
+    `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(trimmedValue)}`;
 };
 
 const handleImageLoad = () => {
@@ -96,5 +127,17 @@ const handleKeyup = () => {
     preValue.value = '';
   }
 };
-</script>
 
+
+/* --------------------------------------------------
+   DOWNLOAD
+-------------------------------------------------- */
+const downloadQR = () => {
+  if (!qrImage.value) return;
+
+  const link = document.createElement("a");
+  link.href = qrImage.value;
+  link.download = "qr-code.png";
+  link.click();
+};
+</script>

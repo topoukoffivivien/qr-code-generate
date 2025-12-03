@@ -1,4 +1,6 @@
-/* ----- VARIABLES MATERIAL YOU ----- */
+/* --------------------------------------------------
+                VARIABLES MATERIAL YOU
+-------------------------------------------------- */
 :root {
   --radius: 18px;
 
@@ -12,7 +14,7 @@
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* Dark mode (manuelle) */
+/* Dark mode manuel */
 [data-theme="dark"] {
   --bg: #0f0f0f;
   --fg: #ffffff;
@@ -23,7 +25,7 @@
   --shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* AUTO : si système est sombre */
+/* AUTO : si système sombre */
 @media (prefers-color-scheme: dark) {
   :root[data-theme="system"] {
     --bg: #0f0f0f;
@@ -36,19 +38,24 @@
   }
 }
 
-/* ---- GLOBAL ---- */
+/* --------------------------------------------------
+                GLOBAL
+-------------------------------------------------- */
 * {
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
 
-body, .app-container {
+body,
+.app-container {
   background: var(--bg);
   color: var(--fg);
   transition: background 0.45s ease, color 0.35s ease;
 }
 
-/* ---- APP ---- */
+/* --------------------------------------------------
+                APP
+-------------------------------------------------- */
 .app-container {
   min-height: 100vh;
   display: flex;
@@ -57,7 +64,9 @@ body, .app-container {
   padding: 16px;
 }
 
-/* CARD (Material + iOS) */
+/* --------------------------------------------------
+            CARD WRAPPER (Material + iOS)
+-------------------------------------------------- */
 .wrapper {
   width: 100%;
   max-width: 420px;
@@ -67,15 +76,16 @@ body, .app-container {
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   transition: height 0.45s ease, transform 0.3s ease, background 0.4s ease;
-  height: 280px;
+  height: auto;
 }
 
 .wrapper.active {
-  height: 550px;
   transform: translateY(-4px);
 }
 
-/* ---- HEADER ---- */
+/* --------------------------------------------------
+                HEADER
+-------------------------------------------------- */
 header h1 {
   font-size: 23px;
   font-weight: 600;
@@ -89,7 +99,9 @@ header p {
   opacity: 0.65;
 }
 
-/* ---- THEME TOGGLE BUTTON ---- */
+/* --------------------------------------------------
+                  THEME TOGGLE BUTTON
+-------------------------------------------------- */
 .theme-toggle-btn {
   position: absolute;
   top: 16px;
@@ -113,9 +125,11 @@ header p {
 
 .theme-icon {
   font-size: 28px;
-}   
+}
 
-/* ---- FORM ---- */
+/* --------------------------------------------------
+                    FORM
+-------------------------------------------------- */
 .form {
   margin: 24px 0 30px;
 }
@@ -162,7 +176,9 @@ header p {
   transform: scale(0.96);
 }
 
-/* ---- QR CODE AREA ---- */
+/* --------------------------------------------------
+                  QR CODE AREA
+-------------------------------------------------- */
 .qr-code {
   opacity: 0;
   padding: 25px 25px;
@@ -194,12 +210,52 @@ header p {
   transform: scale(1.06);
 }
 
-/* ---- RESPONSIVE ---- */
+/* --------------------------------------------------
+              DOWNLOAD BUTTON
+-------------------------------------------------- */
+.download-btn {
+  margin-top: 20px;
+  width: 100%;
+  height: 58px;
+  border-radius: 16px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 6px 20px rgba(161, 121, 101, 0.35);
+  backdrop-filter: blur(10px);
+  transition: background 0.25s ease, transform 0.18s ease;
+}
+
+.download-btn:hover {
+  background: var(--accent);
+  filter: brightness(1.12);
+}
+
+.download-btn:active {
+  transform: scale(0.92);
+}
+
+.qr-code button.download-btn {
+  width: 100%;
+  display: flex;
+}
+
+/* --------------------------------------------------
+              RESPONSIVE
+-------------------------------------------------- */
 @media (max-width: 430px) {
   .wrapper {
     height: 270px;
     padding: 20px;
   }
+
   .wrapper.active {
     height: 520px;
   }
